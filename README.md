@@ -1,4 +1,4 @@
-![alt text](https://github.com/ErdalKARAER/airneis/blob/create_project_structure/AIRNEIS_logo.png?raw=true)
+![alt text](https://github.com/ErdalKARAER/airneis/blob/create_project_structure/docs/AIRNEIS_logo.png?raw=true)
 
 # Members
 
