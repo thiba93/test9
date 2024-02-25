@@ -1,4 +1,4 @@
-![alt text](https://github.com/ErdalKARAER/airneis/blob/figma_sketches/docs/figma_sketches/sketches/home_web.png?raw=true)
+![alt text](https://github.com/ErdalKARAER/airneis/blob/figma_sketches/docs/figma_sketches/sketches/home_mobile.png?raw=true)
 
 # Home mobile
 
