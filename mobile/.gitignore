@@ -1,52 +1,35 @@
-# Ignore node_modules directory
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
 node_modules/
-package-lock.json
 
-# Ignore build directories
-android/build/
-android/app/build/
-ios/build/
-ios/Pods/
-ios/DerivedData/
-
-# Ignore .DS_Store files created by macOS
-.DS_Store
-
-# Ignore Gradle wrapper files
-gradle/wrapper/gradle-wrapper.properties
-gradle/wrapper/gradle-wrapper.jar
-
-# Ignore Android Studio configuration files
-*.iml
-.gradle/
-local.properties
-
-# Ignore iOS Xcode configuration files
-*.pbxproj
-*.mode1v3
-*.mode2v3
-*.perspectivev3
-*.xcworkspace
-*.xcuserstate
-project.xcworkspace/
-xcuserdata/
-
-# Ignore yarn lockfile
-yarn.lock
-
-# Ignore local configuration files
-.env
-
-# Ignore cache files
-.cache/
-
-# Ignore Tailwind CSS build directory
-.tailwind/
-
-# Ignore build artifacts
-build/
+# Expo
+.expo/
 dist/
-out/
+web-build/
 
-# Ignore log files
-*.log
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo

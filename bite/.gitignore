@@ -1,0 +1,52 @@
+# Ignore node_modules directory
+node_modules/
+package-lock.json
+
+# Ignore build directories
+android/build/
+android/app/build/
+ios/build/
+ios/Pods/
+ios/DerivedData/
+
+# Ignore .DS_Store files created by macOS
+.DS_Store
+
+# Ignore Gradle wrapper files
+gradle/wrapper/gradle-wrapper.properties
+gradle/wrapper/gradle-wrapper.jar
+
+# Ignore Android Studio configuration files
+*.iml
+.gradle/
+local.properties
+
+# Ignore iOS Xcode configuration files
+*.pbxproj
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcworkspace
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
+
+# Ignore yarn lockfile
+yarn.lock
+
+# Ignore local configuration files
+.env
+
+# Ignore cache files
+.cache/
+
+# Ignore Tailwind CSS build directory
+.tailwind/
+
+# Ignore build artifacts
+build/
+dist/
+out/
+
+# Ignore log files
+*.log
