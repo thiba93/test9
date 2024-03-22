@@ -1,3 +1,5 @@
-const IndexPage = () => <h1>Index Page</h1>
+import Layout from "@/components/Layout"
+
+const IndexPage = () => <Layout>Contenu</Layout>
 
 export default IndexPage
