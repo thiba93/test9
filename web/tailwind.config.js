@@ -9,6 +9,8 @@ module.exports = {
       colors: {
         "primary-blue": "#92C7CF",
         "primary-cream": "#FBF9F1",
+        "secondary-cream": "#E5E1DA",
+        "secondary-blue": "#AAD7D9",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
