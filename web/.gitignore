@@ -9,6 +9,22 @@
 # testing
 /coverage
 
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Prisma generated files
+prisma/schema.prisma
+prisma/.env
+prisma/migrations/
+!prisma/.env.example
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*~
+
 # next.js
 /.next/
 /out/
@@ -27,6 +43,10 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
