@@ -153,9 +153,12 @@ const Component = () => {
                         <button onClick={() => handleDelete(item.id)}>
                           🗑️
                         </button>
-                        <button onClick={() => handleDelete(item.id)}>
+                        <Link
+                          href={`/backoffice/products/${item.id}`}
+                          style={{ marginRight: "10px" }}
+                        >
                           🔍
-                        </button>
+                        </Link>
                       </Cell>
                     </Row>
                   ))}
