@@ -1,43 +1,172 @@
-import Layout from "@/components/Layout"
+/* eslint-disable max-lines */
+/* eslint-disable no-alert */
+/* eslint-disable max-lines-per-function */
+/* eslint-disable no-console */
+import * as React from "react"
 import { useEffect, useState } from "react"
+
+import {
+  Table,
+  Header,
+  HeaderRow,
+  Body,
+  Row,
+  Cell,
+} from "@table-library/react-table-library/table"
+import { useTheme } from "@table-library/react-table-library/theme"
+import {
+  useSort,
+  HeaderCellSort,
+} from "@table-library/react-table-library/sort"
+import {
+  HeaderCellSelect,
+  CellSelect,
+  useRowSelect,
+} from "@table-library/react-table-library/select"
+import Layout from "@/components/Layout"
 import Link from "next/link"
 
-function Products() {
+const Component = () => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("/api/products")
-      const data = await res.json()
-      setProducts(data)
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/products")
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error("Failed to fetch products:", error)
+      }
     }
-    fetchData()
+
+    fetchProducts()
   }, [])
+
+  const data = { nodes: products }
+  const theme = useTheme({
+    Table: `
+      --data-table-library_grid-template-columns: 24px 1fr 1fr 1fr 1fr 1fr;
+      width: 100%;
+      height: auto; 
+    `,
+    BaseRow: `
+      width: 100%;
+    `,
+  })
+  const sort = useSort(
+    data,
+    {
+      onChange: onSortChange,
+    },
+    {
+      sortFns: {
+        ID: (array) => array.sort((a, b) => a.id.localeCompare(b.id)),
+        NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
+        PRICE: (array) => array.sort((a, b) => a.price - b.price),
+        DESCRIPTION: (array) =>
+          array.sort((a, b) => {
+            if (a.description === null && b.description === null) {
+              return 0
+            }
+
+            if (a.description === null) {
+              return 1
+            }
+
+            if (b.description === null) {
+              return -1
+            }
+
+            return a.description.localeCompare(b.description)
+          }),
+      },
+    },
+  )
+  const select = useRowSelect(data, {
+    onChange: onSelectChange,
+  })
+
+  function onSortChange(action, state) {
+    console.log("Sort Action:", action, "State:", state)
+  }
+
+  function onSelectChange(action, state) {
+    console.log("Select Action:", action, "State:", state)
+  }
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
+      console.log("id", id)
+
+      try {
+        await fetch(`/api/products/${id}`, { method: "DELETE" })
+        setProducts(products.filter((product) => product.id !== id))
+      } catch (error) {
+        console.error("Failed to delete product:", error)
+      }
+    }
+  }
 
   return (
     <Layout>
-      <div className="p-5">
-        <h1 className="text-3xl font-bold text-center mb-10">
-          Liste des produits
-        </h1>
-        <div className="flex justify-end mb-6">
-          <Link href="backoffice/products/addProduct">Ajouter un produit</Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="border rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
-            >
-              <h2 className="text-xl font-semibold">{product.name}</h2>
-              <p className="text-lg text-gray-800 mt-2">${product.price}</p>
-              <p className="text-gray-600 mt-2">{product.description}</p>
-            </div>
-          ))}
+      <div style={{ overflowX: "auto" }}>
+        <div style={{ minWidth: "100vw" }}>
+          <Table
+            data={data}
+            theme={theme}
+            layout={{ custom: true }}
+            sort={sort}
+            select={select}
+          >
+            {(tableList) => (
+              <>
+                <Header>
+                  <HeaderRow>
+                    <HeaderCellSelect />
+                    <HeaderCellSort sortKey="ID">ID</HeaderCellSort>
+                    <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
+                    <HeaderCellSort sortKey="PRICE">Price</HeaderCellSort>
+                    <HeaderCellSort sortKey="DESCRIPTION">
+                      Description
+                    </HeaderCellSort>
+                    <HeaderCellSort sortKey="DESCRIPTION">
+                      Action
+                    </HeaderCellSort>
+                  </HeaderRow>
+                </Header>
+                <Body>
+                  {tableList.map((item) => (
+                    <Row item={item} key={item.id}>
+                      <CellSelect item={item} />
+                      <Cell>{item.id}</Cell>
+                      <Cell>{item.name}</Cell>
+                      <Cell>{item.price}</Cell>
+                      <Cell>{item.description}</Cell>
+                      <Cell>
+                        <Link
+                          href={`/backoffice/products/update/${item.id}`}
+                          style={{ marginRight: "10px" }}
+                        >
+                          ✏️
+                        </Link>
+                        <button onClick={() => handleDelete(item.id)}>
+                          🗑️
+                        </button>
+                        <button onClick={() => handleDelete(item.id)}>
+                          🔍
+                        </button>
+                      </Cell>
+                    </Row>
+                  ))}
+                </Body>
+              </>
+            )}
+          </Table>
         </div>
       </div>
     </Layout>
   )
 }
 
-export default Products
+export default Component

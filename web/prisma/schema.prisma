@@ -16,7 +16,7 @@ datasource db {
 model Product {
   id        String   @id @default(uuid()) @db.Uuid
   name      String?
-  description String?
+  description String? @default("")
   price     Float?
   image     String?
   createdAt DateTime @default(now())
