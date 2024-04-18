@@ -1,8 +1,4 @@
-/* eslint-disable no-alert */
-/* eslint-disable no-console */
-/* eslint-disable line-comment-position */
 /* eslint-disable max-lines-per-function */
-/* eslint-disable no-inline-comments */
 import Layout from "@/components/Layout"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -31,7 +27,7 @@ const UpdatePage = () => {
           description: data.description || "",
         })
       } catch (error) {
-        console.error("Failed to get product:", error)
+        //Console.error("Failed to get product:", error)
       }
     }
 
@@ -60,13 +56,13 @@ const UpdatePage = () => {
         throw new Error("Failed to update product")
       }
 
-      const updatedProduct = await response.json()
-      console.log("Product updated successfully:", updatedProduct)
-      alert("Product updated successfully!")
-      router.push("/backoffice") // Assume this is the path to your products list
+      await response.json()
+      //Console.log("Product updated successfully:", updatedProduct)
+      //Alert("Product updated successfully!")
+      router.push("/backoffice")
     } catch (error) {
-      console.error("Failed to update product:", error)
-      alert("Failed to update product")
+      //Console.error("Failed to update product:", error)
+      //Alert("Failed to update product")
     }
   }
 
@@ -105,11 +101,19 @@ const UpdatePage = () => {
         </label>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
         >
-          Update
+          Modifier
         </button>
       </form>
+      <div className="max-w-md mx-auto">
+        <button
+          onClick={() => router.push("/backoffice")}
+          className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
+        >
+          Retour
+        </button>
+      </div>
     </Layout>
   )
 }

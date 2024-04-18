@@ -1,7 +1,6 @@
-/* eslint-disable max-lines */
 /* eslint-disable no-alert */
+/* eslint-disable max-lines */
 /* eslint-disable max-lines-per-function */
-/* eslint-disable no-console */
 import * as React from "react"
 import { useEffect, useState } from "react"
 
@@ -25,9 +24,11 @@ import {
 } from "@table-library/react-table-library/select"
 import Layout from "@/components/Layout"
 import Link from "next/link"
+import { useRouter } from "next/router"
 
 const Component = () => {
   const [products, setProducts] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,7 +37,7 @@ const Component = () => {
         const data = await response.json()
         setProducts(data)
       } catch (error) {
-        console.error("Failed to fetch products:", error)
+        //Console.error("Failed to fetch products:", error)
       }
     }
 
@@ -87,29 +88,38 @@ const Component = () => {
     onChange: onSelectChange,
   })
 
-  function onSortChange(action, state) {
-    console.log("Sort Action:", action, "State:", state)
+  function onSortChange() {
+    //Console.log("Sort Action:", action, "State:", state)
   }
 
-  function onSelectChange(action, state) {
-    console.log("Select Action:", action, "State:", state)
+  function onSelectChange() {
+    //Console.log("Select Action:", action, "State:", state)
   }
 
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
-      console.log("id", id)
+      //Console.log("id", id)
 
       try {
         await fetch(`/api/products/${id}`, { method: "DELETE" })
         setProducts(products.filter((product) => product.id !== id))
       } catch (error) {
-        console.error("Failed to delete product:", error)
+        //Console.error("Failed to delete product:", error)
       }
     }
   }
 
   return (
     <Layout>
+      <div className="flex justify-between items-center p-4">
+        <h1 className="text-3xl font-bold">Manage Products</h1>
+        <button
+          onClick={() => router.push("/backoffice/products/addProduct")}
+          className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
+        >
+          Ajouter un nouveau produit
+        </button>
+      </div>
       <div style={{ overflowX: "auto" }}>
         <div style={{ minWidth: "100vw" }}>
           <Table
