@@ -28,14 +28,16 @@ import { useRouter } from "next/router"
 
 const Component = () => {
   const [products, setProducts] = useState([])
+  const [selectedIds, setSelectedIds] = useState([])
   const router = useRouter()
+  const data = { nodes: products }
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch("/api/products")
-        const data = await response.json()
-        setProducts(data)
+        const dataResponse = await response.json()
+        setProducts(dataResponse)
       } catch (error) {
         //Console.error("Failed to fetch products:", error)
       }
@@ -44,7 +46,6 @@ const Component = () => {
     fetchProducts()
   }, [])
 
-  const data = { nodes: products }
   const theme = useTheme({
     Table: `
       --data-table-library_grid-template-columns: 24px 1fr 1fr 1fr 1fr 1fr;
@@ -92,19 +93,30 @@ const Component = () => {
     //Console.log("Sort Action:", action, "State:", state)
   }
 
-  function onSelectChange() {
+  function onSelectChange(action, state) {
     //Console.log("Select Action:", action, "State:", state)
+    setSelectedIds(state.ids)
   }
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
-      //Console.log("id", id)
-
+  const handleDelete = async () => {
+    if (
+      window.confirm(
+        "Êtes-vous sûr de vouloir supprimer les produits sélectionnés ?",
+      )
+    ) {
       try {
-        await fetch(`/api/products/${id}`, { method: "DELETE" })
-        setProducts(products.filter((product) => product.id !== id))
+        const promises = selectedIds.map((id) =>
+          fetch(`/api/products/${id}`, { method: "DELETE" }),
+        )
+
+        await Promise.all(promises)
+
+        setProducts(
+          products.filter((product) => !selectedIds.includes(product.id)),
+        )
+        setSelectedIds([])
       } catch (error) {
-        //Console.error("Failed to delete product:", error)
+        //Console.error("Failed to delete products:", error)
       }
     }
   }
