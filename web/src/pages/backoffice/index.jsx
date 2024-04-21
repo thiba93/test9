@@ -3,6 +3,7 @@
 /* eslint-disable max-lines-per-function */
 import * as React from "react"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 import {
   Table,
@@ -28,23 +29,24 @@ import { useRouter } from "next/router"
 
 const Component = () => {
   const [products, setProducts] = useState([])
+  const [selectedIds, setSelectedIds] = useState([])
   const router = useRouter()
+  const data = { nodes: products }
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch("/api/products")
-        const data = await response.json()
-        setProducts(data)
+        const dataResponse = await response.json()
+        setProducts(dataResponse)
       } catch (error) {
-        //Console.error("Failed to fetch products:", error)
+        toast.error("Failed to fetch products:", error)
       }
     }
 
     fetchProducts()
   }, [])
 
-  const data = { nodes: products }
   const theme = useTheme({
     Table: `
       --data-table-library_grid-template-columns: 24px 1fr 1fr 1fr 1fr 1fr;
@@ -89,22 +91,32 @@ const Component = () => {
   })
 
   function onSortChange() {
-    //Console.log("Sort Action:", action, "State:", state)
+    //Do nothing for now
   }
 
-  function onSelectChange() {
-    //Console.log("Select Action:", action, "State:", state)
+  function onSelectChange(action, state) {
+    setSelectedIds(state.ids)
   }
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce produit ?")) {
-      //Console.log("id", id)
-
+  const handleDelete = async () => {
+    if (
+      window.confirm(
+        "Êtes-vous sûr de vouloir supprimer les produits sélectionnés ?",
+      )
+    ) {
       try {
-        await fetch(`/api/products/${id}`, { method: "DELETE" })
-        setProducts(products.filter((product) => product.id !== id))
+        const promises = selectedIds.map((id) =>
+          fetch(`/api/products/${id}`, { method: "DELETE" }),
+        )
+
+        await Promise.all(promises)
+
+        setProducts(
+          products.filter((product) => !selectedIds.includes(product.id)),
+        )
+        setSelectedIds([])
       } catch (error) {
-        //Console.error("Failed to delete product:", error)
+        toast.error("Failed to delete products:", error)
       }
     }
   }

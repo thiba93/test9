@@ -2,6 +2,7 @@
 import Layout from "@/components/Layout"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 const DetailProduct = () => {
   const {
@@ -26,7 +27,7 @@ const DetailProduct = () => {
             description: data.description || "",
           })
         } catch (error) {
-          //Console.error("Failed to get product:", error)
+          toast.error("Failed to get product:", error)
         }
       }
       fetchProduct()

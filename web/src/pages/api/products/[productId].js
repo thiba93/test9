@@ -2,7 +2,6 @@ import { prisma } from "@/back/db"
 
 export default async function handler(req, res) {
   const id = req.query.productId
-  //Console.log(req.method)
 
   if (req.method === "PATCH") {
     const { name, price, description } = req.body
@@ -26,21 +25,18 @@ export default async function handler(req, res) {
 
       res.status(204).send()
     } catch (error) {
-      //Console.error("Failed to delete product:", error)
       res.status(500).json({ error: error.message })
     }
   }
 
   if (req.method === "GET") {
     try {
-      //Console.log("id back", id)
       const product = await prisma.product.findUnique({
         where: { id },
       })
 
       res.status(200).json(product)
     } catch (error) {
-      //Console.error("Failed to delete product:", error)
       res.status(500).json({ error: error.message })
     }
   }
