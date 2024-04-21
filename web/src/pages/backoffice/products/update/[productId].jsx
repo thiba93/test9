@@ -3,6 +3,7 @@ import Layout from "@/components/Layout"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { useUpdateProductForm } from "@/pages/backoffice/products/forms/useUpdateProductForm"
+import { toast } from "sonner"
 
 const UpdatePage = () => {
   const router = useRouter()
@@ -25,7 +26,7 @@ const UpdatePage = () => {
             description: data.description || "",
           })
         } catch (error) {
-          //Console.error("Failed to get product:", error)
+          toast.error("Failed to get product:", error)
         }
       }
       fetchProduct()
@@ -41,12 +42,12 @@ const UpdatePage = () => {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to update product")
+        toast.error("Failed to update product:", response.statusText)
       }
 
       router.push("/backoffice")
     } catch (error) {
-      //Console.error("Failed to update product:", error)
+      toast.error("Failed to update product:", error)
     }
   }
   const formik = useUpdateProductForm(product, saveProduct)

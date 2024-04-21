@@ -1,6 +1,7 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useRouter } from "next/router"
+import { toast } from "sonner"
 
 export const useAddProductForm = () => {
   const router = useRouter()
@@ -32,7 +33,7 @@ export const useAddProductForm = () => {
         })
         router.push("/backoffice")
       } catch (error) {
-        //Console.error("Failed to add product:", error)
+        toast.error("Failed to add product:", error)
       }
     },
   })

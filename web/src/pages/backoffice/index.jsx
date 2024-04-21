@@ -3,6 +3,7 @@
 /* eslint-disable max-lines-per-function */
 import * as React from "react"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 import {
   Table,
@@ -39,7 +40,7 @@ const Component = () => {
         const dataResponse = await response.json()
         setProducts(dataResponse)
       } catch (error) {
-        //Console.error("Failed to fetch products:", error)
+        toast.error("Failed to fetch products:", error)
       }
     }
 
@@ -90,11 +91,10 @@ const Component = () => {
   })
 
   function onSortChange() {
-    //Console.log("Sort Action:", action, "State:", state)
+    //Do nothing for now
   }
 
   function onSelectChange(action, state) {
-    //Console.log("Select Action:", action, "State:", state)
     setSelectedIds(state.ids)
   }
 
@@ -116,7 +116,7 @@ const Component = () => {
         )
         setSelectedIds([])
       } catch (error) {
-        //Console.error("Failed to delete products:", error)
+        toast.error("Failed to delete products:", error)
       }
     }
   }
