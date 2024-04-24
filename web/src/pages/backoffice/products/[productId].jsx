@@ -1,38 +1,53 @@
 /* eslint-disable max-lines-per-function */
 import Layout from "@/components/Layout"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
+import axios from "axios"
 
-const DetailProduct = () => {
-  const {
-    query: { productId },
-  } = useRouter()
-  const [product, setProduct] = useState({
-    name: "",
-    price: "",
-    description: "",
-  })
-  const router = useRouter()
+const fetchProduct = async ({ queryKey }) => {
+  const [, productId] = queryKey
 
-  useEffect(() => {
-    if (productId) {
-      const fetchProduct = async () => {
-        try {
-          const res = await fetch(`/api/products/${productId}`)
-          const data = await res.json()
-          setProduct({
-            name: data.name || "",
-            price: data.price || "",
-            description: data.description || "",
-          })
-        } catch (error) {
-          toast.error("Failed to get product:", error)
-        }
-      }
-      fetchProduct()
+  if (!productId) {
+    return null
+  }
+
+  try {
+    const response = await axios.get(`/api/products/${productId}`)
+
+    return response.data
+  } catch (error) {
+    if (error.response) {
+      toast.error(`Failed to fetch product: ${error.response.statusText}`)
+    } else if (error.request) {
+      toast.error("No response was received for the product request")
+    } else {
+      toast.error(`Error setting up product request: ${error.message}`)
     }
-  }, [productId])
+
+    return null
+  }
+}
+const DetailProduct = () => {
+  const router = useRouter()
+  const { productId } = router.query
+  const queryResult = useQuery({
+    queryKey: ["product", productId],
+    queryFn: fetchProduct,
+    enabled: Boolean(productId),
+  })
+  const { isLoading } = queryResult
+  const { isError } = queryResult
+  const { error } = queryResult
+  const product = queryResult.data
+
+  if (isLoading) {
+    toast.loading("Loading product...")
+  }
+
+  if (isError) {
+    toast.error(`Failed to get product: ${error.message}`)
+  }
 
   return (
     <Layout>
@@ -45,7 +60,7 @@ const DetailProduct = () => {
           <input
             type="text"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            value={product.name}
+            value={product ? product.name : ""}
             readOnly
           />
         </div>
@@ -54,7 +69,7 @@ const DetailProduct = () => {
           <input
             type="number"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            value={product.price}
+            value={product ? product.price : ""}
             readOnly
           />
         </div>
@@ -63,7 +78,7 @@ const DetailProduct = () => {
           <textarea
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             rows="3"
-            value={product.description}
+            value={product ? product.description : ""}
             readOnly
           />
         </div>
