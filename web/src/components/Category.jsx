@@ -56,7 +56,7 @@ const Category = () => {
         >
           <Link
             key={category.id}
-            href={`/category/categoryId/products/products`}
+            href={`/category/${category.id}/products`}
             passHref
           >
             <Image
