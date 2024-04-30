@@ -20,10 +20,9 @@ const validationSchema = object({
 })
 const SignUpPage = () => {
   const router = useRouter()
-  const onSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
+  const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       await axios.post("/api/users", values)
-      resetForm()
       router.push("/sign-in")
     } catch (error) {
       setErrors({ submit: error.response.data.error })
