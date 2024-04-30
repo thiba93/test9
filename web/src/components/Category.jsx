@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from "react"
 import Image from "next/image"
 import { toast } from "sonner"
+import Link from "next/link"
 
 const Category = () => {
   const [categories, setCategories] = useState([])
-
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -23,40 +23,65 @@ const Category = () => {
         }
 
         const data = await response.json()
-       setCategories(data)
+        const sortedCategories = data
+          .sort((a, b) => a.displayRank - b.displayRank)
+          .slice(0, 3)
+        setCategories(sortedCategories)
       } catch (error) {
         toast("Error fetching categories:", error)
       }
     }
-    
 
     fetchCategories()
   }, [])
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "right",
+        gap: "1rem",
+        marginTop: "2rem",
+      }}
+    >
       {categories.map((category, index) => (
-        <div key={index} style={{ width: "calc(33.333% - 1rem)", position: "relative" }}>
-          <Image 
-            src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRifpBsS3fGJgO70OE7vGwLDt7IIKF02wVju8PwaNJXyxoadWRS4rDhgqvEVXBkj-IkllRN6RDByQp49zM"
-            alt={category.displayName}
-            width="300"
-            height="400"
-            objectFit="cover"
-          />
-          <p style={{ 
-            position: "absolute", 
-            top: "50%", 
-            left: "50%", 
-            transform: "translate(-50%, -50%)", 
-            color: "white", 
-            fontSize: "20px", 
-            fontWeight: "bold",
-            textAlign: "center",
-            width: "100%"
-          }}>
-            {category.displayName}
-          </p>
+        <div
+          key={index}
+          style={{
+            width: "calc(33.333% - 1rem)",
+            position: "relative",
+            marginBottom: "20px",
+          }}
+        >
+          <Link
+            key={category.id}
+            href={`/category/categoryId/products/products`}
+            passHref
+          >
+            <Image
+              src="https://media.istockphoto.com/id/1266344041/fr/photo/rendu-3d-de-la-table-%C3%A0-manger-de-planche-de-bord-rugueux.jpg?s=1024x1024&w=is&k=20&c=7dQshXAOs3_feA5vqJ8DoHq6-lA7RL8XZkul-zKHzuw="
+              alt={category.displayName}
+              width="300"
+              height="400"
+              objectFit="cover"
+            />
+            <p
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                color: "black",
+                fontSize: "20px",
+                fontWeight: "bold",
+                textAlign: "center",
+                width: "100%",
+              }}
+            >
+              {category.displayName}
+            </p>
+          </Link>
         </div>
       ))}
     </div>
