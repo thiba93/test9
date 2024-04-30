@@ -3,6 +3,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import Layout from "@/components/Layout"
 import Image from "next/image"
+import Link from "next/link"
 
 const Product = ({ product }) => (
   <div className="bg-fbf9f1 p-5 rounded-lg shadow-lg">
@@ -48,7 +49,13 @@ const CategoryProducts = () => {
         <h1 className="text-3xl text-e5e1da font-bold mb-5">Products in Category</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {products.map((product) => (
+              <Link
+              key={product.id}
+              href={`/category/${categoryId}/product/${product.id}`}
+              passHref
+            >
             <Product key={product.id} product={product} />
+            </Link>
           ))}
         </div>
       </div>
