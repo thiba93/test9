@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { useUpdateProductForm } from "@/pages/backoffice/products/forms/useUpdateProductForm"
 import { toast } from "sonner"
+import axios from "axios"
 
 const UpdatePage = () => {
   const router = useRouter()
@@ -18,15 +19,17 @@ const UpdatePage = () => {
     if (productId) {
       const fetchProduct = async () => {
         try {
-          const response = await fetch(`/api/products/${productId}`)
-          const data = await response.json()
+          const response = await axios.get(`/api/products/${productId}`)
           setProduct({
-            name: data.name || "",
-            price: data.price || "",
-            description: data.description || "",
+            name: response.data.name || "",
+            price: response.data.price || "",
+            description: response.data.description || "",
           })
         } catch (error) {
-          toast.error("Failed to get product:", error)
+          const errorMsg = error.response
+            ? error.response.statusText
+            : error.message
+          toast.error(`Failed to get product: ${errorMsg}`)
         }
       }
       fetchProduct()
@@ -35,19 +38,15 @@ const UpdatePage = () => {
 
   const saveProduct = async (values) => {
     try {
-      const response = await fetch(`/api/products/${productId}`, {
-        method: "PATCH",
+      await axios.patch(`/api/products/${productId}`, values, {
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
       })
-
-      if (!response.ok) {
-        toast.error("Failed to update product:", response.statusText)
-      }
-
       router.push("/backoffice")
     } catch (error) {
-      toast.error("Failed to update product:", error)
+      const errorMsg = error.response
+        ? error.response.statusText
+        : error.message
+      toast.error(`Failed to update product: ${errorMsg}`)
     }
   }
   const formik = useUpdateProductForm(product, saveProduct)
