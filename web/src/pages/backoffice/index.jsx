@@ -27,7 +27,7 @@ import Layout from "@/components/Layout"
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-const Component = () => {
+const AdminTable = () => {
   const [products, setProducts] = useState([])
   const [selectedIds, setSelectedIds] = useState([])
   const router = useRouter()
@@ -50,13 +50,35 @@ const Component = () => {
 
   const theme = useTheme({
     Table: `
-      --data-table-library_grid-template-columns: 24px 1fr 1fr 1fr 1fr 1fr;
+      --data-table-library_grid-template-columns: 48px 1fr 1fr 1fr 1fr 1fr;
       width: 100%;
-      height: auto; 
+      height: auto;
     `,
     BaseRow: `
       width: 100%;
+      background: #E5E1DA;
     `,
+    HeaderRow: `
+        .th {
+          border-bottom: 1px solid #a0a8ae;
+        }
+      `,
+    Row: `
+        &:nth-of-type(odd) {
+          background-color: #E5E1DA;
+        }
+
+        &:nth-of-type(even) {
+          background-color: #FBF9F1;
+        }
+      `,
+    BaseCell: `
+        &:not(:last-of-type) {
+          border-right: 1px solid #a0a8ae;
+        }
+
+        padding: 8px 16px;
+      `,
   })
   const sort = useSort(
     data,
@@ -195,4 +217,4 @@ const Component = () => {
   )
 }
 
-export default Component
+export default AdminTable
