@@ -4,25 +4,43 @@ const prisma = new PrismaClient()
 
 async function main() {
   await prisma.product.deleteMany({})
+  await prisma.category.deleteMany({})
 
+  const amountOfCategories = 10
+  const categories = []
+
+  for (let i = 0; i < amountOfCategories; i += 1) {
+    const category = {
+      displayName: faker.commerce.department(),
+      uniqueSlug: faker.lorem.slug(),
+      displayRank: faker.number.int({ min: 1, max: 100 }),
+    }
+    categories.push(category)
+  }
+
+   await prisma.category.createMany({
+    data: categories,
+    skipDuplicates: true,
+  })
   const amountOfProducts = 50
   const products = []
 
-  for (let i = 0; i < amountOfProducts; i += 1) {
+  for (let i = 0; i < amountOfProducts; i+=1) {
     const product = {
       name: faker.commerce.productName(),
-      price: faker.number.float({ min: 500, max: 5000 }),
-      image:
-        "https://t4.ftcdn.net/jpg/02/67/08/33/360_F_267083342_Dw7NvtP2oy0JfO2qTjDlWePOaxoCJgxM.jpg",
+      description: faker.commerce.productDescription(),
+      price: faker.number.int({ min: 1, max: 1000 }),
+      image: faker.image.url(640, 480, "furniture", true),
+      categoryId: faker.number.int({ min: 1, max: amountOfCategories }),
     }
-
     products.push(product)
   }
 
-  const addProducts = async () =>
+  const addProducts = async () => {
     await prisma.product.createMany({ data: products })
+  }
 
-  addProducts()
+  await addProducts()
 }
 
 main()

@@ -38,6 +38,7 @@ const AdminTable = () => {
       try {
         const response = await fetch("/api/products")
         const dataResponse = await response.json()
+
         setProducts(dataResponse)
       } catch (error) {
         toast.error("Failed to fetch products:", error)

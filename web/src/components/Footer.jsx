@@ -13,7 +13,7 @@ const Footer = () => (
     <ul className="flex gap-2">
       <li>
         <Image
-          src="instagram_logo.svg"
+          src="/instagram_logo.svg"
           alt="Instagram"
           height={24}
           width={24}
@@ -22,7 +22,7 @@ const Footer = () => (
       <li>
         <Link href="https://www.linkedin.com">
           <Image
-            src="linkedin_logo.svg"
+            src="/linkedin_logo.svg"
             alt="Linkedin"
             height={24}
             width={24}
