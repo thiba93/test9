@@ -5,7 +5,7 @@
 
 */
 -- AlterTable
-ALTER TABLE "Product" ADD COLUMN     "categoryId" INTEGER NOT NULL;
+ALTER TABLE "Product" ADD COLUMN     "categoryId" INTEGER;
 
 -- CreateTable
 CREATE TABLE "Category" (

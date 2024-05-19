@@ -28,7 +28,9 @@ const Category = () => {
           .slice(0, 3)
         setCategories(sortedCategories)
       } catch (error) {
-        toast("Error fetching categories:", error)
+        // eslint-disable-next-line no-console
+        console.error("Error fetching categories:", error)
+        toast(`Error fetching categories: ${error.message}`)
       }
     }
 
