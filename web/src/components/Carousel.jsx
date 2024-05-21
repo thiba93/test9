@@ -26,20 +26,20 @@ const Carousel = () => {
   }
 
   return (
-    <div className="relative overflow-hidden w-full max-w-4xl mx-auto h-96">
+    <div className="relative overflow-hidden w-full max-w-4xl mx-auto h-96 bg-[#FBF9F1] border-4 border-[#E5E1DA] rounded-lg">
       <div
-        className="bg-no-repeat bg-cover bg-center h-full"
+        className="bg-no-repeat bg-cover bg-center h-full transition-all duration-500"
         style={{ backgroundImage: `url(${images[currentIndex]})` }}
       >
         <button
           onClick={goPrev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 text-xl"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#92C7CF] hover:bg-[#AAD7D9] text-white p-2 text-xl rounded-full"
         >
           ‹
         </button>
         <button
           onClick={goNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 text-xl"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#92C7CF] hover:bg-[#AAD7D9] text-white p-2 text-xl rounded-full"
         >
           ›
         </button>

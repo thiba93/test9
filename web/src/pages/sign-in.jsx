@@ -50,7 +50,7 @@ const SignInPage = () => {
             fontSize: "24px",
           }}
         >
-          Sign In
+          Connexion
         </h1>
         <Formik
           initialValues={initialValues}

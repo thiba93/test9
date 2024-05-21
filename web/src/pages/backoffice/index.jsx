@@ -53,6 +53,7 @@ const AdminTable = () => {
       --data-table-library_grid-template-columns: 48px 1fr 1fr 1fr 1fr 1fr;
       width: 100%;
       height: auto;
+      overflow: hidden; // Added to hide overflow
     `,
     BaseRow: `
       width: 100%;
@@ -78,6 +79,15 @@ const AdminTable = () => {
         }
 
         padding: 8px 16px;
+      `,
+    Cell: `
+        &.description-cell {
+          max-height: 25px;
+          line-height: 1.2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       `,
   })
   const sort = useSort(
@@ -156,7 +166,7 @@ const AdminTable = () => {
         </button>
       </div>
       <div style={{ overflowX: "auto" }}>
-        <div style={{ minWidth: "100vw" }}>
+        <div style={{ width: "100%" }}>
           <Table
             data={data}
             theme={theme}
@@ -187,7 +197,9 @@ const AdminTable = () => {
                       <Cell>{item.id}</Cell>
                       <Cell>{item.name}</Cell>
                       <Cell>{item.price}</Cell>
-                      <Cell>{item.description}</Cell>
+                      <Cell className="description-cell">
+                        {item.description}
+                      </Cell>
                       <Cell>
                         <Link
                           href={`/backoffice/products/update/${item.id}`}
