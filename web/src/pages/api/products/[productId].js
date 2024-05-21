@@ -4,12 +4,12 @@ export default async function handler(req, res) {
   const id = req.query.productId
 
   if (req.method === "PATCH") {
-    const { name, price, description } = req.body
+    const { name, price, description, categoryId } = req.body
 
     try {
       const product = await prisma.product.update({
         where: { id },
-        data: { name, price, description },
+        data: { name, price, description, categoryId },
       })
       res.status(200).json(product)
     } catch (error) {
@@ -33,6 +33,9 @@ export default async function handler(req, res) {
     try {
       const product = await prisma.product.findUnique({
         where: { id },
+        include: {
+          category: true,
+        },
       })
 
       res.status(200).json(product)

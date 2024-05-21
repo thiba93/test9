@@ -1,3 +1,5 @@
+/* eslint-disable max-lines-per-function */
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { Formik } from "formik"
 import { object } from "yup"
@@ -24,7 +26,7 @@ const SignInPage = () => {
       localStorage.setItem("token", response.data.token)
       router.push("/")
     } catch (error) {
-      setErrors({ submit: error.response.data.error })      
+      setErrors({ submit: error.response.data.error })
     }
 
     setSubmitting(false)
@@ -32,31 +34,54 @@ const SignInPage = () => {
 
   return (
     <Layout>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-        <h1 style={{ marginTop: "20px", textAlign: "center", fontWeight: "bold", fontSize: "24px" }}>Sign In</h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <h1
+          style={{
+            marginTop: "20px",
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: "24px",
+          }}
+        >
+          Sign In
+        </h1>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {formikProps => (
+          {(formikProps) => (
             <Form>
               <FormField
                 name="email"
                 type="email"
-                placeholder="Enter your e-mail"
+                placeholder="Entrez votre e-mail"
                 label="E-mail"
               />
               <FormField
                 name="password"
                 type="password"
-                placeholder="Enter your password"
-                label="Password"
+                placeholder="Entrez votre mot de passe"
+                label="Mot de passe"
               />
               {formikProps.errors.submit && (
-                <div style={{ color: "red", marginTop: "10px" }}>{formikProps.errors.submit}</div>
+                <div style={{ color: "red", marginTop: "10px" }}>
+                  {formikProps.errors.submit}
+                </div>
               )}
-              <SubmitButton disabled={formikProps.isSubmitting}>Sign In</SubmitButton>
+              <Link href="/sign-up" legacyBehavior>
+                <a className="font-semibold">Pas de compte ? Cliquez ici</a>
+              </Link>
+              <SubmitButton disabled={formikProps.isSubmitting}>
+                Connexion
+              </SubmitButton>
             </Form>
           )}
         </Formik>

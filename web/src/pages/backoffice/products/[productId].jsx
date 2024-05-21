@@ -51,12 +51,10 @@ const DetailProduct = () => {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold text-center my-6">
-        View Product Detail
-      </h1>
+      <h1 className="text-3xl font-bold text-center my-6">Détail du produit</h1>
       <div className="max-w-md mx-auto">
         <div>
-          <span className="text-gray-700">Product Name:</span>
+          <span className="text-gray-700">Nom du produit:</span>
           <input
             type="text"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -65,7 +63,7 @@ const DetailProduct = () => {
           />
         </div>
         <div>
-          <span className="text-gray-700">Price:</span>
+          <span className="text-gray-700">Prix:</span>
           <input
             type="number"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -79,6 +77,15 @@ const DetailProduct = () => {
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             rows="3"
             value={product ? product.description : ""}
+            readOnly
+          />
+        </div>
+        <div>
+          <span className="text-gray-700">Categorie:</span>
+          <textarea
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            rows="3"
+            value={product ? product.category.uniqueSlug : ""}
             readOnly
           />
         </div>

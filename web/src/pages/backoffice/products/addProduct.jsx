@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import Layout from "@/components/Layout"
 import { useAddProductForm } from "@/pages/backoffice/products/forms/useAddProductForm"
 
@@ -32,6 +33,20 @@ function AddProduct() {
           />
           {formik.touched.price && formik.errors.price ? (
             <div className="text-red-500 text-sm">{formik.errors.price}</div>
+          ) : null}
+        </label>
+        <label className="block mb-6">
+          <span className="text-gray-700">Id de la catégorie :</span>
+          <input
+            type="number"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            {...formik.getFieldProps("categoryId")}
+            required
+          />
+          {formik.touched.categoryId && formik.errors.categoryId ? (
+            <div className="text-red-500 text-sm">
+              {formik.errors.categoryId}
+            </div>
           ) : null}
         </label>
         <label className="block mb-6">

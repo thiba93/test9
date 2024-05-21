@@ -10,6 +10,7 @@ export function useUpdateProductForm(product, saveProduct) {
       name: product.name,
       price: product.price,
       description: product.description,
+      categoryId: product.categoryId,
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
@@ -23,6 +24,9 @@ export function useUpdateProductForm(product, saveProduct) {
       price: Yup.number()
         .positive("Le prix doit être un nombre positif")
         .required("Le prix est obligatoire"),
+      categoryId: Yup.number()
+        .positive("L'id doit être un nombre positif")
+        .required("L'id est obligatoire"),
       description: Yup.string(),
     }),
     onSubmit: (values) => {

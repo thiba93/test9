@@ -147,7 +147,7 @@ const AdminTable = () => {
   return (
     <Layout>
       <div className="flex justify-between items-center p-4">
-        <h1 className="text-3xl font-bold">Manage Products</h1>
+        <h1 className="text-3xl font-bold">Backoffice Produits</h1>
         <button
           onClick={() => router.push("/backoffice/products/addProduct")}
           className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
@@ -170,8 +170,8 @@ const AdminTable = () => {
                   <HeaderRow>
                     <HeaderCellSelect />
                     <HeaderCellSort sortKey="ID">ID</HeaderCellSort>
-                    <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
-                    <HeaderCellSort sortKey="PRICE">Price</HeaderCellSort>
+                    <HeaderCellSort sortKey="NAME">Nom</HeaderCellSort>
+                    <HeaderCellSort sortKey="PRICE">Prix</HeaderCellSort>
                     <HeaderCellSort sortKey="DESCRIPTION">
                       Description
                     </HeaderCellSort>

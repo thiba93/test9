@@ -47,7 +47,7 @@ const ProductPage = () => {
   if (!product) {
     return (
       <Layout>
-        <div className="text-center">Loading...</div>
+        <div className="text-center">Chargement...</div>
       </Layout>
     )
   }

@@ -2,11 +2,18 @@ import { prisma } from "@/back/db"
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { name, price, description } = req.body
+    const { name, price, description, categoryId } = req.body
 
     try {
       const product = await prisma.product.create({
-        data: { name, price, description },
+        data: {
+          name,
+          price,
+          description,
+          category: {
+            connect: { id: categoryId },
+          },
+        },
       })
       res.status(201).json(product)
     } catch (error) {

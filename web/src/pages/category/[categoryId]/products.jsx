@@ -27,34 +27,38 @@ const CategoryProducts = () => {
   useEffect(() => {
     axios
       .get(`/api/categories/${categoryId}/products`)
-      .then(response => setProducts(response.data))
-      .catch(e => setError(e))
+      .then((response) => setProducts(response.data))
+      .catch((e) => setError(e))
   }, [categoryId])
 
   if (error) {
     return (
       <div className="bg-aad7d9 text-center p-5">
-        <h1 className="text-3xl text-e5e1da">Error Loading Products</h1>
+        <h1 className="text-3xl text-e5e1da">Erreur chargement produits</h1>
       </div>
     )
   }
 
   if (!products.length) {
-    return <div className="bg-fbf9f1 text-center p-5 text-lg">Loading...</div>
+    return (
+      <div className="bg-fbf9f1 text-center p-5 text-lg">Chargement...</div>
+    )
   }
 
   return (
     <Layout>
       <div className="bg-aad7d9 p-5">
-        <h1 className="text-3xl text-e5e1da font-bold mb-5">Products in Category</h1>
+        <h1 className="text-3xl text-e5e1da font-bold mb-5">
+          Produit par catégorie
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {products.map((product) => (
-              <Link
+            <Link
               key={product.id}
               href={`/category/${categoryId}/product/${product.id}`}
               passHref
             >
-            <Product key={product.id} product={product} />
+              <Product key={product.id} product={product} />
             </Link>
           ))}
         </div>

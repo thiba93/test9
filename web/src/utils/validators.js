@@ -6,9 +6,12 @@ export const passwordValidator = string()
   .min(8)
   .matches(
     /(?=.*\p{Lu})(?=.*\p{Ll})(?=.*\d)(?=.*[^\d\p{L}]).*/u,
-    "Must contain: 1 lower & 1 upper letters, 1 digit and 1 spe. char.",
+    "Doit contenir 1 miniscule, 1 majuscule, 1 chiffre et 1 caractères spécial.",
   )
 
-export const usernameValidator = string().min(3, "Your fullname must be at least 3 characters long")
+export const usernameValidator = string().min(
+  3,
+  "Votre pseudo doit faire 3 caractères minimum",
+)
 
 export const idValidator = number().min(1)

@@ -10,6 +10,7 @@ export const useAddProductForm = () => {
       name: "",
       price: "",
       description: "",
+      categoryId: 1,
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -22,6 +23,9 @@ export const useAddProductForm = () => {
       price: Yup.number()
         .positive("Le prix doit être un nombre positif")
         .required("Le prix est obligatoire"),
+      categoryId: Yup.number()
+        .positive("L'id doit être un nombre positif")
+        .required("L'id de la catégorie est obligatoire"),
       description: Yup.string(),
     }),
     onSubmit: async (values) => {

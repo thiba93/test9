@@ -24,6 +24,7 @@ const UpdatePage = () => {
             name: response.data.name || "",
             price: response.data.price || "",
             description: response.data.description || "",
+            categoryId: response.data.categoryId || "",
           })
         } catch (error) {
           const errorMsg = error.response
@@ -53,11 +54,11 @@ const UpdatePage = () => {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold text-center my-6">Update Product</h1>
+      <h1 className="text-3xl font-bold text-center my-6">Modifier produit</h1>
       <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto">
         <div className="space-y-6">
           <label className="block">
-            <span className="text-gray-700">Product Name:</span>
+            <span className="text-gray-700">Nom produit:</span>
             <input
               type="text"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -68,7 +69,7 @@ const UpdatePage = () => {
             )}
           </label>
           <label className="block">
-            <span className="text-gray-700">Price:</span>
+            <span className="text-gray-700">Prix:</span>
             <input
               type="number"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -76,6 +77,19 @@ const UpdatePage = () => {
             />
             {formik.touched.price && formik.errors.price && (
               <p className="text-red-500 text-xs mt-1">{formik.errors.price}</p>
+            )}
+          </label>
+          <label className="block">
+            <span className="text-gray-700">Catégorie:</span>
+            <input
+              type="number"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              {...formik.getFieldProps("categoryId")}
+            />
+            {formik.touched.categoryId && formik.errors.categoryId && (
+              <p className="text-red-500 text-xs mt-1">
+                {formik.errors.categoryId}
+              </p>
             )}
           </label>
           <label className="block">
@@ -90,14 +104,14 @@ const UpdatePage = () => {
             type="submit"
             className="bg-primary-blue hover:bg-secondary-blue text-white font-bold py-2 px-4 rounded w-full"
           >
-            Update
+            Modifier
           </button>
         </div>
         <button
           onClick={() => router.push("/backoffice")}
           className="mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full"
         >
-          Cancel
+          Retour
         </button>
       </form>
     </Layout>
