@@ -13,6 +13,7 @@ import Layout from "@/components/Layout"
 import { Formik } from "formik"
 import { object } from "yup"
 import axios from "axios"
+import { toast } from "sonner"
 
 const initialValues = {
   email: "",
@@ -20,9 +21,11 @@ const initialValues = {
   username: "",
 }
 const validationSchema = object({
-  email: emailValidator.required().label("E-mail"),
-  password: passwordValidator.required().label("Password"),
-  username: usernameValidator.required().label("Username"),
+  email: emailValidator.required("L'email est requis").label("E-mail"),
+  password: passwordValidator
+    .required("Le mot de passe est requis")
+    .label("Mot de passe"),
+  username: usernameValidator.required("Le pseudo est requis").label("Pseudo"),
 })
 const SignUpPage = () => {
   const router = useRouter()
@@ -32,6 +35,7 @@ const SignUpPage = () => {
       router.push("/sign-in")
     } catch (error) {
       setErrors({ submit: error.response.data.error })
+      toast.error("Erreur lors de l'inscription. Email déjà utilisé.")
     }
 
     setSubmitting(false)
