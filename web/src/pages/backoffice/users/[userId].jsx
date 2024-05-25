@@ -49,6 +49,10 @@ const DetailUser = () => {
     toast.error(`Failed to get user: ${error.message}`)
   }
 
+  const handleBackClick = () => {
+    router.push("/backoffice/users")
+  }
+
   return (
     <Layout>
       <h1 className="text-3xl font-bold text-center my-6">
@@ -74,7 +78,7 @@ const DetailUser = () => {
           />
         </div>
         <button
-          onClick={() => router.push("/backoffice/users")}
+          onClick={handleBackClick}
           className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
         >
           Retour

@@ -125,7 +125,7 @@ const AdminTable = () => {
     setSelectedIds(state.ids)
   }
 
-  const handleDelete = async () => {
+  const handleDelete = () => async () => {
     if (
       window.confirm(
         "Êtes-vous sûr de vouloir supprimer les produits sélectionnés ?",
@@ -201,9 +201,7 @@ const AdminTable = () => {
                         >
                           ✏️
                         </Link>
-                        <button onClick={() => handleDelete(item.id)}>
-                          🗑️
-                        </button>
+                        <button onClick={handleDelete(item.id)}>🗑️</button>
                         <Link
                           href={`/backoffice/products/${item.id}`}
                           style={{ marginRight: "10px" }}

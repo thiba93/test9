@@ -112,7 +112,7 @@ const AdminTable = () => {
     setSelectedIds(state.ids)
   }
 
-  const handleDelete = async () => {
+  const handleDelete = () => async () => {
     if (
       window.confirm(
         "Êtes-vous sûr de vouloir supprimer les catégories sélectionnées ?",
@@ -184,9 +184,7 @@ const AdminTable = () => {
                         >
                           ✏️
                         </Link>
-                        <button onClick={() => handleDelete(item.id)}>
-                          🗑️
-                        </button>
+                        <button onClick={handleDelete(item.id)}>🗑️</button>
                         <Link
                           href={`/backoffice/categories/${item.id}`}
                           style={{ marginRight: "10px" }}

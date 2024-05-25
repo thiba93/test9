@@ -48,6 +48,9 @@ const UpdatePage = () => {
       toast.error(`Failed to update user: ${errorMsg}`)
     }
   }
+  const handleBackClick = () => {
+    router.push("/backoffice/users")
+  }
   const formik = useUpdateUserForm(user, saveUser)
 
   return (
@@ -102,7 +105,7 @@ const UpdatePage = () => {
           </button>
         </div>
         <button
-          onClick={() => router.push("/backoffice")}
+          onClick={handleBackClick}
           className="mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full"
         >
           Retour

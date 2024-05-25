@@ -49,6 +49,9 @@ const UpdatePage = () => {
       toast.error(`Failed to update category: ${errorMsg}`)
     }
   }
+  const handleBackClick = () => {
+    router.push("/backoffice/categories")
+  }
   const formik = useUpdateCategoryForm(category, saveCategory)
 
   return (
@@ -105,7 +108,7 @@ const UpdatePage = () => {
           </button>
         </div>
         <button
-          onClick={() => router.push("/backoffice/categories")}
+          onClick={handleBackClick}
           className="mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full"
         >
           Retour
