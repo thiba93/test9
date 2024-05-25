@@ -34,18 +34,18 @@ const AdminTable = () => {
   const data = { nodes: users }
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchUsers = async () => {
       try {
         const response = await fetch("/api/users")
         const dataResponse = await response.json()
 
         setUsers(dataResponse)
       } catch (error) {
-        toast.error("Failed to fetch products:", error)
+        toast.error("Failed to fetch users:", error)
       }
     }
 
-    fetchProducts()
+    fetchUsers()
   }, [])
 
   const theme = useTheme({
@@ -92,9 +92,7 @@ const AdminTable = () => {
   })
   const sort = useSort(
     data,
-    {
-      onChange: onSortChange,
-    },
+    {},
     {
       sortFns: {
         ID: (array) => array.sort((a, b) => a.id.localeCompare(b.id)),
@@ -108,10 +106,6 @@ const AdminTable = () => {
     onChange: onSelectChange,
   })
 
-  function onSortChange() {
-    //Do nothing for now
-  }
-
   function onSelectChange(action, state) {
     setSelectedIds(state.ids)
   }
@@ -119,7 +113,7 @@ const AdminTable = () => {
   const handleDelete = async () => {
     if (
       window.confirm(
-        "Êtes-vous sûr de vouloir supprimer les produits sélectionnés ?",
+        "Êtes-vous sûr de vouloir supprimer les utilisateurs sélectionnés ?",
       )
     ) {
       try {
@@ -129,10 +123,10 @@ const AdminTable = () => {
 
         await Promise.all(promises)
 
-        setUsers(users.filter((product) => !selectedIds.includes(product.id)))
+        setUsers(users.filter((user) => !selectedIds.includes(user.id)))
         setSelectedIds([])
       } catch (error) {
-        toast.error("Failed to delete products:", error)
+        toast.error("Failed to delete user:", error)
       }
     }
   }

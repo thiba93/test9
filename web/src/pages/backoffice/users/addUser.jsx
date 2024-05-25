@@ -2,7 +2,7 @@
 import Layout from "@/components/Layout"
 import { useAddUserForm } from "@/pages/backoffice/users/forms/useAddUserForm"
 
-function AddProduct() {
+function AddUser() {
   const formik = useAddUserForm()
 
   return (
@@ -58,4 +58,4 @@ function AddProduct() {
   )
 }
 
-export default AddProduct
+export default AddUser

@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 import axios from "axios"
 
-const fetchProduct = async ({ queryKey }) => {
+const fetchUser = async ({ queryKey }) => {
   const [, userId] = queryKey
 
   if (!userId) {
@@ -18,22 +18,22 @@ const fetchProduct = async ({ queryKey }) => {
     return response.data
   } catch (error) {
     if (error.response) {
-      toast.error(`Failed to fetch product: ${error.response.statusText}`)
+      toast.error(`Failed to fetch user: ${error.response.statusText}`)
     } else if (error.request) {
-      toast.error("No response was received for the product request")
+      toast.error("No response was received for the user request")
     } else {
-      toast.error(`Error setting up product request: ${error.message}`)
+      toast.error(`Error setting up user request: ${error.message}`)
     }
 
     return null
   }
 }
-const DetailProduct = () => {
+const DetailUser = () => {
   const router = useRouter()
   const { userId } = router.query
   const queryResult = useQuery({
-    queryKey: ["product", userId],
-    queryFn: fetchProduct,
+    queryKey: ["user", userId],
+    queryFn: fetchUser,
     enabled: Boolean(userId),
   })
   const { isLoading } = queryResult
@@ -42,11 +42,11 @@ const DetailProduct = () => {
   const user = queryResult.data
 
   if (isLoading) {
-    toast.loading("Loading product...")
+    toast.loading("Loading user...")
   }
 
   if (isError) {
-    toast.error(`Failed to get product: ${error.message}`)
+    toast.error(`Failed to get user: ${error.message}`)
   }
 
   return (
@@ -84,4 +84,4 @@ const DetailProduct = () => {
   )
 }
 
-export default DetailProduct
+export default DetailUser

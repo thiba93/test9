@@ -28,24 +28,24 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 
 const AdminTable = () => {
-  const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [selectedIds, setSelectedIds] = useState([])
   const router = useRouter()
-  const data = { nodes: products }
+  const data = { nodes: categories }
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await fetch("/api/products")
+        const response = await fetch("/api/categories")
         const dataResponse = await response.json()
 
-        setProducts(dataResponse)
+        setCategories(dataResponse)
       } catch (error) {
-        toast.error("Failed to fetch products:", error)
+        toast.error("Failed to fetch categories:", error)
       }
     }
 
-    fetchProducts()
+    fetchCategories()
   }, [])
 
   const theme = useTheme({
@@ -92,40 +92,21 @@ const AdminTable = () => {
   })
   const sort = useSort(
     data,
-    {
-      onChange: onSortChange,
-    },
+    {},
     {
       sortFns: {
         ID: (array) => array.sort((a, b) => a.id.localeCompare(b.id)),
-        NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
-        PRICE: (array) => array.sort((a, b) => a.price - b.price),
-        DESCRIPTION: (array) =>
-          array.sort((a, b) => {
-            if (a.description === null && b.description === null) {
-              return 0
-            }
-
-            if (a.description === null) {
-              return 1
-            }
-
-            if (b.description === null) {
-              return -1
-            }
-
-            return a.description.localeCompare(b.description)
-          }),
+        NAME: (array) =>
+          array.sort((a, b) => a.displayName.localeCompare(b.displayName)),
+        SLUG: (array) =>
+          array.sort((a, b) => a.uniqueSlug.localeCompare(b.uniqueSlug)),
+        DISPLAY: (array) => array.sort((a, b) => a.price - b.price),
       },
     },
   )
   const select = useRowSelect(data, {
     onChange: onSelectChange,
   })
-
-  function onSortChange() {
-    //Do nothing for now
-  }
 
   function onSelectChange(action, state) {
     setSelectedIds(state.ids)
@@ -134,22 +115,22 @@ const AdminTable = () => {
   const handleDelete = async () => {
     if (
       window.confirm(
-        "Êtes-vous sûr de vouloir supprimer les produits sélectionnés ?",
+        "Êtes-vous sûr de vouloir supprimer les catégories sélectionnées ?",
       )
     ) {
       try {
         const promises = selectedIds.map((id) =>
-          fetch(`/api/products/${id}`, { method: "DELETE" }),
+          fetch(`/api/categories/${id}`, { method: "DELETE" }),
         )
 
         await Promise.all(promises)
 
-        setProducts(
-          products.filter((product) => !selectedIds.includes(product.id)),
+        setCategories(
+          categories.filter((category) => !selectedIds.includes(category.id)),
         )
         setSelectedIds([])
       } catch (error) {
-        toast.error("Failed to delete products:", error)
+        toast.error("Failed to delete categories:", error)
       }
     }
   }
@@ -157,12 +138,12 @@ const AdminTable = () => {
   return (
     <Layout>
       <div className="flex justify-between items-center p-4">
-        <h1 className="text-3xl font-bold">Backoffice Produits</h1>
+        <h1 className="text-3xl font-bold">Backoffice Catégories</h1>
         <button
-          onClick={() => router.push("/backoffice/products/addProduct")}
+          onClick={() => router.push("/backoffice/categories/addCategory")}
           className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
         >
-          Ajouter un nouveau produit
+          Ajouter une nouvelle catégorie
         </button>
       </div>
       <div style={{ overflowX: "auto" }}>
@@ -181,13 +162,11 @@ const AdminTable = () => {
                     <HeaderCellSelect />
                     <HeaderCellSort sortKey="ID">ID</HeaderCellSort>
                     <HeaderCellSort sortKey="NAME">Nom</HeaderCellSort>
-                    <HeaderCellSort sortKey="PRICE">Prix</HeaderCellSort>
-                    <HeaderCellSort sortKey="DESCRIPTION">
-                      Description
+                    <HeaderCellSort sortKey="SLUG">Identifiant</HeaderCellSort>
+                    <HeaderCellSort sortKey="DISPLAY">
+                      N° Affichage
                     </HeaderCellSort>
-                    <HeaderCellSort sortKey="DESCRIPTION">
-                      Action
-                    </HeaderCellSort>
+                    <HeaderCellSort sortKey="ACTION">Action</HeaderCellSort>
                   </HeaderRow>
                 </Header>
                 <Body>
@@ -195,14 +174,12 @@ const AdminTable = () => {
                     <Row item={item} key={item.id}>
                       <CellSelect item={item} />
                       <Cell>{item.id}</Cell>
-                      <Cell>{item.name}</Cell>
-                      <Cell>{item.price}</Cell>
-                      <Cell className="description-cell">
-                        {item.description}
-                      </Cell>
+                      <Cell>{item.displayName}</Cell>
+                      <Cell>{item.uniqueSlug}</Cell>
+                      <Cell>{item.displayRank}</Cell>
                       <Cell>
                         <Link
-                          href={`/backoffice/products/update/${item.id}`}
+                          href={`/backoffice/categories/update/${item.id}`}
                           style={{ marginRight: "10px" }}
                         >
                           ✏️
@@ -211,7 +188,7 @@ const AdminTable = () => {
                           🗑️
                         </button>
                         <Link
-                          href={`/backoffice/products/${item.id}`}
+                          href={`/backoffice/categories/${item.id}`}
                           style={{ marginRight: "10px" }}
                         >
                           🔍

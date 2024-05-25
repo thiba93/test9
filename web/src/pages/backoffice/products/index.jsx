@@ -92,9 +92,7 @@ const AdminTable = () => {
   })
   const sort = useSort(
     data,
-    {
-      onChange: onSortChange,
-    },
+    {},
     {
       sortFns: {
         ID: (array) => array.sort((a, b) => a.id.localeCompare(b.id)),
@@ -122,10 +120,6 @@ const AdminTable = () => {
   const select = useRowSelect(data, {
     onChange: onSelectChange,
   })
-
-  function onSortChange() {
-    //Do nothing for now
-  }
 
   function onSelectChange(action, state) {
     setSelectedIds(state.ids)

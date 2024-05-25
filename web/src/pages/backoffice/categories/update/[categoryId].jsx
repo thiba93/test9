@@ -2,95 +2,98 @@
 import Layout from "@/components/Layout"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { useUpdateUserForm } from "@/pages/backoffice/users/forms/useUpdateUserForm"
+import { useUpdateCategoryForm } from "@/pages/backoffice/categories/forms/useUpdateCategoryForm"
 import { toast } from "sonner"
 import axios from "axios"
 
 const UpdatePage = () => {
   const router = useRouter()
-  const { userId } = router.query
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    username: "",
+  const { categoryId } = router.query
+  const [category, setCategory] = useState({
+    displayName: "",
+    uniqueSlug: "",
+    displayRank: "",
   })
 
   useEffect(() => {
-    if (userId) {
-      const fetchUser = async () => {
+    if (categoryId) {
+      const fetchCategory = async () => {
         try {
-          const response = await axios.get(`/api/users/${userId}`)
-          setUser({
-            username: response.data.username || "",
-            email: response.data.email || "",
+          const response = await axios.get(`/api/categories/${categoryId}`)
+          setCategory({
+            displayName: response.data.displayName || "",
+            uniqueSlug: response.data.uniqueSlug || "",
+            displayRank: response.data.displayRank || "",
           })
         } catch (error) {
           const errorMsg = error.response
             ? error.response.statusText
             : error.message
-          toast.error(`Failed to get user: ${errorMsg}`)
+          toast.error(`Failed to get category: ${errorMsg}`)
         }
       }
-      fetchUser()
+      fetchCategory()
     }
-  }, [userId])
+  }, [categoryId])
 
-  const saveUser = async (values) => {
+  const saveCategory = async (values) => {
     try {
-      await axios.patch(`/api/users/${userId}`, values, {
+      await axios.patch(`/api/categories/${categoryId}`, values, {
         headers: { "Content-Type": "application/json" },
       })
-      router.push("/backoffice/users")
+      router.push("/backoffice/categories")
     } catch (error) {
       const errorMsg = error.response
         ? error.response.statusText
         : error.message
-      toast.error(`Failed to update user: ${errorMsg}`)
+      toast.error(`Failed to update category: ${errorMsg}`)
     }
   }
-  const formik = useUpdateUserForm(user, saveUser)
+  const formik = useUpdateCategoryForm(category, saveCategory)
 
   return (
     <Layout>
       <h1 className="text-3xl font-bold text-center my-6">
-        Modifier utilisateur
+        Modifier catégorie
       </h1>
       <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto">
         <div className="space-y-6">
           <label className="block">
-            <span className="text-gray-700">Email:</span>
+            <span className="text-gray-700">Nom:</span>
             <input
               type="text"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              {...formik.getFieldProps("email")}
+              {...formik.getFieldProps("displayName")}
             />
-            {formik.touched.email && formik.errors.email && (
-              <p className="text-red-500 text-xs mt-1">{formik.errors.email}</p>
-            )}
-          </label>
-          <label className="block">
-            <span className="text-gray-700">Pseudo:</span>
-            <input
-              type="text"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              {...formik.getFieldProps("username")}
-            />
-            {formik.touched.username && formik.errors.username && (
+            {formik.touched.displayName && formik.errors.displayName && (
               <p className="text-red-500 text-xs mt-1">
-                {formik.errors.username}
+                {formik.errors.displayName}
               </p>
             )}
           </label>
           <label className="block">
-            <span className="text-gray-700">Mot de passe:</span>
+            <span className="text-gray-700">Identifiant:</span>
             <input
-              type="password"
+              type="text"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              {...formik.getFieldProps("password")}
+              {...formik.getFieldProps("uniqueSlug")}
             />
-            {formik.touched.password && formik.errors.password && (
+            {formik.touched.uniqueSlug && formik.errors.uniqueSlug && (
               <p className="text-red-500 text-xs mt-1">
-                {formik.errors.password}
+                {formik.errors.uniqueSlug}
+              </p>
+            )}
+          </label>
+          <label className="block">
+            <span className="text-gray-700">N° Affichage:</span>
+            <input
+              type="number"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              {...formik.getFieldProps("displayRank")}
+            />
+            {formik.touched.displayRank && formik.errors.displayRank && (
+              <p className="text-red-500 text-xs mt-1">
+                {formik.errors.displayRank}
               </p>
             )}
           </label>
@@ -102,7 +105,7 @@ const UpdatePage = () => {
           </button>
         </div>
         <button
-          onClick={() => router.push("/backoffice")}
+          onClick={() => router.push("/backoffice/categories")}
           className="mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full"
         >
           Retour
