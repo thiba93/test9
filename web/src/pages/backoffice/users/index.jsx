@@ -130,13 +130,16 @@ const AdminTable = () => {
       }
     }
   }
+  const handleAddUser = () => {
+    router.push("/backoffice/users/addUser")
+  }
 
   return (
     <Layout>
       <div className="flex justify-between items-center p-4">
         <h1 className="text-3xl font-bold">Backoffice Utilisateurs</h1>
         <button
-          onClick={() => router.push("/backoffice/users/addUser")}
+          onClick={handleAddUser}
           className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
         >
           Ajouter un nouveau utilisateur

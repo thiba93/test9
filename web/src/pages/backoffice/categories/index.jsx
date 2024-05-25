@@ -134,13 +134,16 @@ const AdminTable = () => {
       }
     }
   }
+  const handleAddCategory = () => {
+    router.push("/backoffice/categories/addCategory")
+  }
 
   return (
     <Layout>
       <div className="flex justify-between items-center p-4">
         <h1 className="text-3xl font-bold">Backoffice Catégories</h1>
         <button
-          onClick={() => router.push("/backoffice/categories/addCategory")}
+          onClick={handleAddCategory}
           className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
         >
           Ajouter une nouvelle catégorie
