@@ -5,8 +5,8 @@ import Category from "@/components/Category"
 
 const IndexPage = () => (
   <Layout>
-    <Carousel></Carousel>
-    <Category></Category>
+    <Carousel />
+    <Category />
   </Layout>
 )
 
