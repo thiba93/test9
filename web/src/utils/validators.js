@@ -1,9 +1,9 @@
-import { number, string } from "yup"
+import { number, string, object } from "yup"
 
-export const emailValidator = string().email()
+export const emailValidator = string().email("L'email n'est pas valide.")
 
 export const passwordValidator = string()
-  .min(8)
+  .min(8, "Le mot de passe doit faire 8 caractères minimum.")
   .matches(
     /(?=.*\p{Lu})(?=.*\p{Ll})(?=.*\d)(?=.*[^\d\p{L}]).*/u,
     "Doit contenir 1 miniscule, 1 majuscule, 1 chiffre et 1 caractères spécial.",
@@ -15,3 +15,17 @@ export const usernameValidator = string().min(
 )
 
 export const idValidator = number().min(1)
+
+export const subjectValidator = string()
+.email("Invalid email address")
+.required("Required")
+
+export const messageValidator = string()
+  .required("Required")
+  .max(500, "Message cannot be longer than 500 characters")
+
+  export const contactValidationSchema = object({
+    email: emailValidator,
+    subject: subjectValidator,
+    message: messageValidator,
+  })

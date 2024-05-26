@@ -49,6 +49,10 @@ const DetailProduct = () => {
     toast.error(`Failed to get product: ${error.message}`)
   }
 
+  const handleBackClick = () => {
+    router.push("/backoffice")
+  }
+
   return (
     <Layout>
       <h1 className="text-3xl font-bold text-center my-6">Détail du produit</h1>
@@ -90,7 +94,7 @@ const DetailProduct = () => {
           />
         </div>
         <button
-          onClick={() => router.push("/backoffice")}
+          onClick={handleBackClick}
           className="bg-primary-blue hover:bg-secondary-blue text-black font-bold py-2 px-4 rounded"
         >
           Retour

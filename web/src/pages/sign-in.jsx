@@ -15,8 +15,10 @@ const initialValues = {
   password: "",
 }
 const validationSchema = object({
-  email: emailValidator.required().label("E-mail"),
-  password: passwordValidator.required().label("Password"),
+  email: emailValidator.required("L'email est requis").label("E-mail"),
+  password: passwordValidator
+    .required("Le mot de passe est requis")
+    .label("Mot de passe"),
 })
 const SignInPage = () => {
   const router = useRouter()
