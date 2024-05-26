@@ -1,9 +1,3 @@
-/*
-  Warnings:
-
-  - A unique constraint covering the columns `[id]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-
-*/
 -- CreateTable
 CREATE TABLE "Cart" (
     "id" UUID NOT NULL,
@@ -19,7 +13,10 @@ CREATE TABLE "CartItem" (
     "id" UUID NOT NULL,
     "cartId" UUID NOT NULL,
     "productId" UUID NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL DEFAULT 1,
+    "price" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
 
@@ -28,9 +25,6 @@ CREATE TABLE "CartItem" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Cart_userId_key" ON "Cart"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
 
 -- AddForeignKey
 ALTER TABLE "Cart" ADD CONSTRAINT "Cart_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
