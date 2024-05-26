@@ -27,6 +27,7 @@ const Header = () => {
       <Link href="/" legacyBehavior>
         <a className="font-semibold">AIRNEIS</a>
       </Link>
+
       <ul className="flex gap-4 items-center">
         <li>
           <MagnifyingGlassIcon className="h-6 w-6" />
@@ -36,6 +37,11 @@ const Header = () => {
         </li>
         <li>
           <Bars3Icon className="h-6 w-6" />
+        </li>
+        <li>
+          <Link href="/contact" legacyBehavior>
+            <a className="font-semibold">Contact</a>
+          </Link>
         </li>
         {auth ? (
           <>
