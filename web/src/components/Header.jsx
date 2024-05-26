@@ -33,7 +33,11 @@ const Header = () => {
           <MagnifyingGlassIcon className="h-6 w-6" />
         </li>
         <li>
-          <ShoppingCartIcon className="h-6 w-6" />
+          <Link href="/cart" legacyBehavior>
+            <a>
+              <ShoppingCartIcon className="h-6 w-6" />
+            </a>
+          </Link>
         </li>
         <li>
           <Bars3Icon className="h-6 w-6" />
@@ -46,7 +50,6 @@ const Header = () => {
         {auth ? (
           <>
             <li>
-              {/* Logout Text Button */}
               <button
                 onClick={handleLogout}
                 className="text-white font-semibold"
