@@ -2,106 +2,103 @@
 import Layout from "@/components/Layout"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { useUpdateProductForm } from "@/pages/backoffice/products/forms/useUpdateProductForm"
+import { useUpdateCategoryForm } from "@/pages/backoffice/categories/forms/useUpdateCategoryForm"
 import { toast } from "sonner"
 import axios from "axios"
 
 const UpdatePage = () => {
   const router = useRouter()
-  const { productId } = router.query
-  const [product, setProduct] = useState({
-    name: "",
-    price: "",
-    description: "",
+  const { categoryId } = router.query
+  const [category, setCategory] = useState({
+    displayName: "",
+    uniqueSlug: "",
+    displayRank: "",
   })
 
   useEffect(() => {
-    if (productId) {
-      const fetchProduct = async () => {
+    if (categoryId) {
+      const fetchCategory = async () => {
         try {
-          const response = await axios.get(`/api/products/${productId}`)
-          setProduct({
-            name: response.data.name || "",
-            price: response.data.price || "",
-            description: response.data.description || "",
-            categoryId: response.data.categoryId || "",
+          const response = await axios.get(`/api/categories/${categoryId}`)
+          setCategory({
+            displayName: response.data.displayName || "",
+            uniqueSlug: response.data.uniqueSlug || "",
+            displayRank: response.data.displayRank || "",
           })
         } catch (error) {
           const errorMsg = error.response
             ? error.response.statusText
             : error.message
-          toast.error(`Failed to get product: ${errorMsg}`)
+          toast.error(`Failed to get category: ${errorMsg}`)
         }
       }
-      fetchProduct()
+      fetchCategory()
     }
-  }, [productId])
+  }, [categoryId])
 
-  const saveProduct = async (values) => {
+  const saveCategory = async (values) => {
     try {
-      await axios.patch(`/api/products/${productId}`, values, {
+      await axios.patch(`/api/categories/${categoryId}`, values, {
         headers: { "Content-Type": "application/json" },
       })
-      router.push("/backoffice")
+      router.push("/backoffice/categories")
     } catch (error) {
       const errorMsg = error.response
         ? error.response.statusText
         : error.message
-      toast.error(`Failed to update product: ${errorMsg}`)
+      toast.error(`Failed to update category: ${errorMsg}`)
     }
   }
   const handleBackClick = () => {
-    router.push("/backoffice")
+    router.push("/backoffice/categories")
   }
-  const formik = useUpdateProductForm(product, saveProduct)
+  const formik = useUpdateCategoryForm(category, saveCategory)
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold text-center my-6">Modifier produit</h1>
+      <h1 className="text-3xl font-bold text-center my-6">
+        Modifier catégorie
+      </h1>
       <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto">
         <div className="space-y-6">
           <label className="block">
-            <span className="text-gray-700">Nom produit:</span>
+            <span className="text-gray-700">Nom:</span>
             <input
               type="text"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              {...formik.getFieldProps("name")}
+              {...formik.getFieldProps("displayName")}
             />
-            {formik.touched.name && formik.errors.name && (
-              <p className="text-red-500 text-xs mt-1">{formik.errors.name}</p>
-            )}
-          </label>
-          <label className="block">
-            <span className="text-gray-700">Prix:</span>
-            <input
-              type="number"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              {...formik.getFieldProps("price")}
-            />
-            {formik.touched.price && formik.errors.price && (
-              <p className="text-red-500 text-xs mt-1">{formik.errors.price}</p>
-            )}
-          </label>
-          <label className="block">
-            <span className="text-gray-700">Catégorie:</span>
-            <input
-              type="number"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              {...formik.getFieldProps("categoryId")}
-            />
-            {formik.touched.categoryId && formik.errors.categoryId && (
+            {formik.touched.displayName && formik.errors.displayName && (
               <p className="text-red-500 text-xs mt-1">
-                {formik.errors.categoryId}
+                {formik.errors.displayName}
               </p>
             )}
           </label>
           <label className="block">
-            <span className="text-gray-700">Description:</span>
-            <textarea
+            <span className="text-gray-700">Identifiant:</span>
+            <input
+              type="text"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              rows="3"
-              {...formik.getFieldProps("description")}
-            ></textarea>
+              {...formik.getFieldProps("uniqueSlug")}
+            />
+            {formik.touched.uniqueSlug && formik.errors.uniqueSlug && (
+              <p className="text-red-500 text-xs mt-1">
+                {formik.errors.uniqueSlug}
+              </p>
+            )}
+          </label>
+          <label className="block">
+            <span className="text-gray-700">N° Affichage:</span>
+            <input
+              type="number"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              {...formik.getFieldProps("displayRank")}
+            />
+            {formik.touched.displayRank && formik.errors.displayRank && (
+              <p className="text-red-500 text-xs mt-1">
+                {formik.errors.displayRank}
+              </p>
+            )}
           </label>
           <button
             type="submit"
