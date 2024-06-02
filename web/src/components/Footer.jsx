@@ -8,7 +8,11 @@ const Footer = () => (
       <li>-</li>
       <li>Mentions légales</li>
       <li>-</li>
-      <li>Contact</li>
+      <li>
+        <Link href="/contact" legacyBehavior>
+          <a className="font-semibold">Contact</a>
+        </Link>
+    </li>
     </ul>
     <ul className="flex gap-2">
       <li>

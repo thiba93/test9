@@ -30,7 +30,11 @@ const Header = () => {
 
       <ul className="flex gap-4 items-center">
         <li>
-          <MagnifyingGlassIcon className="h-6 w-6" />
+          <Link href="/search" legacyBehavior>
+            <a>
+              <MagnifyingGlassIcon className="h-6 w-6" />
+            </a>
+          </Link>
         </li>
         <li>
           <Link href="/cart" legacyBehavior>
@@ -41,11 +45,6 @@ const Header = () => {
         </li>
         <li>
           <Bars3Icon className="h-6 w-6" />
-        </li>
-        <li>
-          <Link href="/contact" legacyBehavior>
-            <a className="font-semibold">Contact</a>
-          </Link>
         </li>
         {auth ? (
           <>
