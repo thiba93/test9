@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { toast } from "sonner"
+import { useRouter } from "next/router"
 
 const Search = () => {
   const [query, setQuery] = useState("")
@@ -11,6 +12,7 @@ const Search = () => {
   const [categories, setCategories] = useState([])
   const [sortBy, setSortBy] = useState("")
   const [results, setResults] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -41,6 +43,9 @@ const Search = () => {
       toast.error("Error searching products:", error.message)
       toast.error(`Error searching products: ${error.message}`, error)
     }
+  }
+  const handleProductClick = (categoryId, productId) => {
+    router.push(`/category/${categoryId}/product/${productId}`)
   }
 
   return (
@@ -113,7 +118,11 @@ const Search = () => {
           <h2 className="text-xl font-bold mb-4">Results</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {results.map((product) => (
-              <div key={product.id} className="border p-4 rounded">
+              <div
+                key={product.id}
+                className="border p-4 rounded cursor-pointer"
+                onClick={() => handleProductClick(product.category.id, product.id)}
+              >
                 <h3 className="text-lg font-bold">{product.name}</h3>
                 <p>{product.description}</p>
                 <p>Price: {product.price}€</p>

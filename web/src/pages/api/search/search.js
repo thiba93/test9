@@ -15,6 +15,15 @@ export default async function handler(req, res) {
         AND: [],
       }
 
+      if (query) {
+        filters.AND.push({
+          OR: [
+            { name: { contains: query, mode: "insensitive" } },
+            { description: { contains: query, mode: "insensitive" } }
+          ]
+        })
+      }
+
       if (minPrice) {
         filters.AND.push({
           price: { gte: parseFloat(minPrice) },
@@ -48,39 +57,19 @@ export default async function handler(req, res) {
         include: { category: true },
       })
 
-      // Filter products by title and description using exact and partial matching
-      let filteredProducts = products
-
-      if (query) {
-        filteredProducts = products.filter((product) => {
-          const nameLower = product.name.toLowerCase()
-          const descriptionLower = product.description.toLowerCase()
-          const queryLower = query.toLowerCase()
-          const isExactMatchTitle = nameLower === queryLower
-          const isPartialMatchTitle = nameLower.includes(queryLower)
-          const isExactMatchDescription = descriptionLower === queryLower
-          const isPartialMatchDescription = descriptionLower.includes(queryLower)
-
-          return (
-            isExactMatchTitle ||
-            isPartialMatchTitle ||
-            isExactMatchDescription ||
-            isPartialMatchDescription
-          )
-        })
-      }
+      toast(`Fetched ${products.length} products`)
 
       // Sort by price if sortBy is specified
       if (sortBy) {
-        filteredProducts.sort((a, b) =>
+        products.sort((a, b) =>
           sortBy === "asc" ? a.price - b.price : b.price - a.price
         )
       }
 
-      res.status(200).json(filteredProducts)
+      res.status(200).json(products)
     } catch (error) {
       toast.error(`Error: ${error.message}`)
-      res.status(500).json({ error: "Internal server error" })
+      res.status(500).json({ error: "Internal server error", message: error.message })
     }
   } else {
     res.setHeader("Allow", ["GET"])
