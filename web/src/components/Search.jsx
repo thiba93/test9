@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { toast } from "sonner"
 import { useRouter } from "next/router"
+import FiltersModal from "./ui/FilterModals"
 
 const Search = () => {
   const [query, setQuery] = useState("")
@@ -12,6 +13,7 @@ const Search = () => {
   const [categories, setCategories] = useState([])
   const [sortBy, setSortBy] = useState("")
   const [results, setResults] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -47,11 +49,21 @@ const Search = () => {
   const handleProductClick = (categoryId, productId) => {
     router.push(`/category/${categoryId}/product/${productId}`)
   }
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+  const closeModal = () => {
+    setIsModalOpen(false)
+    handleSearch() 
+  }
 
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Rechercher</h1>
       <div className="flex justify-center mb-8">
+        <button onClick={openModal} className="bg-blue-500 text-white p-2 rounded mr-2">
+          Filtres
+        </button>
         <input
           type="text"
           placeholder="Search..."
@@ -63,59 +75,28 @@ const Search = () => {
           onClick={handleSearch}
           className="bg-blue-500 text-white p-2 rounded ml-2"
         >
-          Search
+          Rechercher
         </button>
       </div>
+      <FiltersModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        minPrice={minPrice}
+        setMinPrice={setMinPrice}
+        maxPrice={maxPrice}
+        setMaxPrice={setMaxPrice}
+        category={category}
+        setCategory={setCategory}
+        categories={categories}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="col-span-1">
-          <div className="mb-4">
-            <label className="block mb-2">Min Price:</label>
-            <input
-              type="number"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-              className="p-2 border rounded w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2">Max Price:</label>
-            <input
-              type="number"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-              className="p-2 border rounded w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2">Category:</label>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="p-2 border rounded w-full"
-            >
-              <option value="">Select a category</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.displayName}>
-                  {cat.displayName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2">Sort By Price:</label>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="p-2 border rounded w-full"
-            >
-              <option value="">None</option>
-              <option value="asc">Ascending</option>
-              <option value="desc">Descending</option>
-            </select>
-          </div>
+          {/* Remove the filters from here, since they're now in the modal */}
         </div>
         <div className="col-span-3">
-          <h2 className="text-xl font-bold mb-4">Results</h2>
+          <h2 className="text-xl font-bold mb-4">Résultats</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {results.map((product) => (
               <div
