@@ -13,6 +13,9 @@ const AuthenticatedMenuItems = ({ handleLogout }) => (
       <Link href="/backoffice" className="block p-2">Backoffice</Link>
     </li>
     <li>
+    <Link href="/history" className="block p-2">Airneis History</Link>
+    </li>
+    <li>
       <button onClick={handleLogout} className="block p-2">Déconnexion</button>
     </li>
   </>
@@ -27,6 +30,9 @@ const UnauthenticatedMenuItems = () => (
     </li>
     <li>
       <Link href="/contact" className="block p-2">Contact</Link>
+    </li>
+    <li>
+    <Link href="/history" className="block p-2">Airneis History</Link>
     </li>
   </>
 )
