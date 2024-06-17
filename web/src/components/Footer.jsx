@@ -4,7 +4,11 @@ import Link from "next/link"
 const Footer = () => (
   <footer className=" bg-primary-blue p-4 flex justify-between">
     <ul className="flex gap-2 font-semibold">
-      <li>CGU</li>
+      <li>
+      <Link href="/CGU" legacyBehavior>
+          <a className="font-semibold">CGU</a>
+        </Link>
+      </li>
       <li>-</li>
       <li>Mentions légales</li>
       <li>-</li>
