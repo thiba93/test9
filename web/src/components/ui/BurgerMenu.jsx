@@ -7,6 +7,9 @@ import { Bars3Icon } from "@heroicons/react/24/outline"
 const AuthenticatedMenuItems = ({ handleLogout }) => (
   <>
     <li className="border-b">
+      <Link href="/CGU" className="block p-2">CGU</Link>
+    </li>
+    <li className="border-b">
       <Link href="/contact" className="block p-2">Contact</Link>
     </li>
     <li className="border-b">
@@ -15,7 +18,7 @@ const AuthenticatedMenuItems = ({ handleLogout }) => (
     <li>
     <Link href="/history" className="block p-2">Airneis History</Link>
     </li>
-    <li>
+    <li className="border-b">
       <button onClick={handleLogout} className="block p-2">Déconnexion</button>
     </li>
   </>
@@ -27,6 +30,9 @@ const UnauthenticatedMenuItems = () => (
     </li>
     <li className="border-b">
       <Link href="/sign-up" className="block p-2">Inscription</Link>
+    </li>
+    <li className="border-b">
+      <Link href="/CGU" className="block p-2">CGU</Link>
     </li>
     <li>
       <Link href="/contact" className="block p-2">Contact</Link>
