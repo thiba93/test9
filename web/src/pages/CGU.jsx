@@ -107,8 +107,8 @@ const renderSections = () => sections.map((section, index) => (
 const CGU = () => (
   <Layout>
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Conditions Générales d'Utilisation</h1>
-      <p className="mb-4">Voici les Conditions Générales d'Utilisation de notre site web.</p>
+      <h1 className="text-3xl font-bold mb-4">Conditions Générales d&apos;Utilisation</h1>
+      <p className="mb-4">Voici les Conditions Générales d&apos;Utilisation de notre site web.</p>
       {renderSections()}
     </div>
   </Layout>

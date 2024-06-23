@@ -15,6 +15,10 @@ const Header = () => (
       <li>
         <Link href="/updateInfo">Mettre à jour les infos</Link>
       </li>
+  <li>
+        <Link href="/history">Histoire</Link>
+      </li>
+  
         <li>
         <Link href="/search" legacyBehavior>
             <a>
@@ -37,3 +41,4 @@ const Header = () => (
   )
 
 export default Header
+
