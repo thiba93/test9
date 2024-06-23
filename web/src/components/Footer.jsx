@@ -10,7 +10,11 @@ const Footer = () => (
         </Link>
       </li>
       <li>-</li>
-      <li>Mentions légales</li>
+      <li>
+      <Link href="/mentionlegales" legacyBehavior>
+          <a className="font-semibold">Mention légales</a>
+        </Link>
+      </li>
       <li>-</li>
       <li>
         <Link href="/contact" legacyBehavior>
