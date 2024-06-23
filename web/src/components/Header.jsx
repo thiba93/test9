@@ -12,6 +12,9 @@ const Header = () => (
       </Link>
 
       <ul className="flex gap-4 items-center">
+      <li>
+        <Link href="/updateInfo">Mettre à jour les infos</Link>
+      </li>
         <li>
         <Link href="/search" legacyBehavior>
             <a>
