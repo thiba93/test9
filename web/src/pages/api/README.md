@@ -8,13 +8,12 @@ Combining Next.js and the REST API
 Using Next.js in combination with a REST API offers a powerful synergy for the development of modern web applications:  
 
 Consolidation of frontend and backend development:  
-
 With Next.js, you can develop both frontend and backend APIs in the same project, simplifying code management and deployments.  
+
 Optimized performance:  
-
 By using Next.js SSR or SSG for the frontend and REST APIs for backend operations, you can deliver a fast, responsive and SEO-optimized application.  
-Scalability:  
 
+Scalability:  
 The stateless nature of REST APIs and the ability of Next.js to generate static pages make it easy to create scalable applications.  
 Easy maintenance:  
 
