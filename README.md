@@ -19,9 +19,9 @@ https://tree.taiga.io/project/romain78780-projet/timeline
 
 # How to start the project ?
 
-First clone the project : git clone https://github.com/ErdalKARAER/airneis.git
-Then, install the dependecies : npm install
-After this, launch the project : npm run start (for production mode) / npm run dev (for dev mode)
+- First clone the project : git clone https://github.com/ErdalKARAER/airneis.git
+- Then, install the dependecies : npm install
+- After this, launch the project : npm run start (for production mode) / npm run dev (for dev mode)
 
 # What's inside the project ?
 
