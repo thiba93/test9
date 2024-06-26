@@ -14,8 +14,6 @@ In choosing Axios for the HTTP requests of our web project, we opted for a solut
 
 We use Prisma to handle database relationship.  
 
-In choosing Prisma to interact with our database, we opted for a modern, high-performance and easy-to-use solution. modern, high-performance and easy-to-use solution. The advantages offered by intuitive API, enhanced security, automated migrations, optimized queries optimized queries, multi-database support, and comprehensive ensure that we can manage the database operations of our e-commerce operations of our e-commerce platform. This approach enables us to respond project requirements, delivering a superior user experience and facilitating and facilitating the management and future evolution of our application.  
-
 - First, change the connection to the database by updating the .env file.
 - Then, generate prisma client by typing : npx prisma generate
 - Now, run the migration by typing : npx prisma migrate dev --name init
