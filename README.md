@@ -23,6 +23,13 @@ https://tree.taiga.io/project/romain78780-projet/timeline
 - Then, install the dependecies : npm install
 - After this, launch the project : npm run start (for production mode) / npm run dev (for dev mode)
 
+# How to start the project on mobile ?
+
+- Make sure you have a emulator phone such as android Studio for example
+- Then navigate to the mobile/ folder
+- After this, install the dependecies : npm install
+- Now, you can launch the project : npm run android (for Android users) / npm run ios (for iPhone users)
+
 # What's inside the project ?
 
 - HOME PAGE
