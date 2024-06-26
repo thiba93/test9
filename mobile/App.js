@@ -1,14 +1,6 @@
-import { StatusBar } from "expo-status-bar"
-import { Text, View } from "react-native"
-import "./global.css"
+import Layout from "./src/components/Layout"
+import React from "react"
 
-const App = () => (
-  <View>
-    <Text className="text-red-500">
-      Open up App.js to start working on your app!
-    </Text>
-    <StatusBar style="auto" />
-  </View>
-)
+const IndexPage = () => <Layout></Layout>
 
-export default App
+export default IndexPage
